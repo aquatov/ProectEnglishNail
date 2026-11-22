@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>WILD RUSSIA · 野性俄罗斯</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@700;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:dark;--gold:#f5c451;--red:#c8102e;--paper:#f6ead2;--ink:#2a1a12;--cn:"Noto Serif SC","Songti SC","STSong","SimSun",serif;--hd:"Playfair Display",Georgia,"Times New Roman",serif}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%;overflow:hidden;background:#1a0508;color:#fff;font-family:Georgia,"Times New Roman",serif}
+canvas{position:fixed;inset:0;width:100%;height:100%;z-index:3;pointer-events:none}
+.slide{position:absolute;inset:0;z-index:1;visibility:hidden;transition:visibility 0s 1.1s;background:radial-gradient(ellipse at 50% 0%,var(--b2),var(--b1) 75%);overflow:hidden;display:flex;flex-direction:column;justify-content:center;padding:8vh 12vw 12vh 8vw}
+.slide.active{visibility:visible;z-index:2;transition-delay:0s;animation:moon 1.1s cubic-bezier(.7,0,.2,1)}
+@keyframes moon{from{clip-path:circle(0% at 50% 50%)}to{clip-path:circle(150% at 50% 50%)}}
+.frame{position:absolute;inset:2.2vh 1.6vw;border:2px solid var(--gold);box-shadow:inset 0 0 0 6px transparent,inset 0 0 0 7px rgba(245,196,81,.45);pointer-events:none;z-index:4}
+.frame::before,.frame::after{content:"";position:absolute;width:26px;height:26px;border:4px solid var(--gold)}
+.frame::before{top:-4px;left:-4px;border-right:0;border-bottom:0}.frame::after{bottom:-4px;right:-4px;border-left:0;border-top:0}
+.mt{position:absolute;left:0;right:0;bottom:0;height:42vh;pointer-events:none}
+.mt svg{position:absolute;bottom:0;width:120%;height:100%}
+.m1{opacity:.18;animation:drift 40s ease-in-out infinite alternate}.m2{opacity:.3;animation:drift 28s ease-in-out infinite alternate-reverse}
+@keyframes drift{to{transform:translateX(-8%)}}
+.cloud{position:absolute;height:34px;width:150px;background:rgba(245,196,81,.12);border-radius:40px;filter:blur(2px);animation:cl 40s linear infinite}
+.cloud::before{content:"";position:absolute;left:25px;top:-16px;width:70px;height:50px;border-radius:50%;background:inherit}
+@keyframes cl{from{transform:translateX(-200px)}to{transform:translateX(110vw)}}
+.lt{position:absolute;top:-10px;z-index:5;width:clamp(44px,6vw,84px);transform-origin:50% 0;animation:sw 4s ease-in-out infinite alternate}
+.lt::before{content:"";display:block;width:2px;height:6vh;background:var(--gold);margin:0 auto}
+.lt i{display:block;height:clamp(52px,7vw,96px);border-radius:50%;background:radial-gradient(circle at 35% 30%,#ff5a5a,var(--red) 55%,#7a0016);box-shadow:0 0 40px 8px rgba(255,60,60,.55);position:relative;animation:gl 2.5s ease-in-out infinite alternate}
+.lt i::before,.lt i::after{content:"";position:absolute;left:25%;width:50%;height:9px;background:var(--gold);border-radius:3px}
+.lt i::before{top:-3px}.lt i::after{bottom:-3px}
+.lt b{display:block;width:3px;height:5vh;margin:3px auto 0;background:var(--gold);box-shadow:-5px 0 0 var(--gold),5px 0 0 var(--gold)}
+@keyframes sw{from{transform:rotate(-7deg)}to{transform:rotate(7deg)}}@keyframes gl{to{box-shadow:0 0 60px 16px rgba(255,90,60,.75)}}
+.cn{position:absolute;right:5vw;top:11vh;writing-mode:vertical-rl;font:900 clamp(64px,13vw,190px)/1.05 var(--cn);color:var(--gold);opacity:0;letter-spacing:.05em;text-shadow:0 0 40px rgba(245,196,81,.5);z-index:1}
+.active .cn{animation:ink 1.6s .4s ease-out forwards}
+@keyframes ink{from{opacity:0;filter:blur(20px);transform:translateY(-40px)}to{opacity:.3;filter:none;transform:none}}
+.seal{position:absolute;right:5vw;bottom:13vh;width:clamp(56px,7vw,92px);height:clamp(56px,7vw,92px);background:var(--red);color:#ffe9c0;font:900 clamp(34px,4.6vw,62px)/1 var(--cn);display:flex;align-items:center;justify-content:center;border:3px solid #ffe9c0;border-radius:6px;box-shadow:0 0 0 3px var(--red);opacity:0;z-index:5}
+.active .seal{animation:stamp .5s 1.3s cubic-bezier(.2,1.6,.4,1) forwards}
+@keyframes stamp{from{opacity:0;transform:scale(3) rotate(-18deg)}to{opacity:.95;transform:rotate(-6deg)}}
+.c{position:relative;z-index:6;opacity:0}
+.active .c{animation:rise .8s cubic-bezier(.2,.9,.2,1) both;animation-delay:calc(.5s + var(--k)*.12s)}
+@keyframes rise{from{opacity:0;transform:translateY(40px);filter:blur(8px)}to{opacity:1;transform:none;filter:none}}
+.tag{font:700 clamp(12px,1.4vw,17px) var(--cn);letter-spacing:.3em;color:var(--gold);text-transform:uppercase}
+.ru{display:block;color:#e9d7b6;opacity:.8;font:400 .82em Georgia,serif;font-style:italic;letter-spacing:normal;text-transform:none;margin-top:.2em}
+h2{font:900 clamp(40px,8.6vw,124px)/1 var(--hd);color:var(--gold);text-shadow:0 4px 0 #7a0c14,0 0 36px rgba(245,196,81,.45);margin:.1em 0 0;text-transform:uppercase}
+.rh{font:700 clamp(16px,2.4vw,32px) var(--cn);letter-spacing:.2em;color:#ffe9c0;margin-bottom:1.6vh}
+.lead{font-size:clamp(14px,1.9vw,24px);max-width:48ch;line-height:1.45;margin-bottom:2.6vh;color:#fff4dc}
+.stats{display:flex;flex-wrap:wrap;gap:3vw;margin-bottom:2.6vh}
+.stats div{border-top:3px solid var(--gold);padding-top:8px}
+.stats b{display:block;font:900 clamp(38px,6.4vw,88px)/1 var(--hd);color:var(--gold)}
+.stats small{font:700 clamp(10px,1.2vw,15px) var(--cn);letter-spacing:.14em;color:#ffe9c0}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:1.6vw;max-width:1000px}
+.card{background:linear-gradient(var(--paper),#ecd9b2);color:var(--ink);border:2px solid var(--gold);border-top:8px solid var(--red);padding:1.8vh 1.2vw;box-shadow:0 10px 30px rgba(0,0,0,.5);transform-origin:top;opacity:0;transition:transform .25s,box-shadow .25s}
+.card:hover{transform:translateY(-8px) rotate(-1deg)!important;box-shadow:0 18px 40px rgba(0,0,0,.6),0 0 24px rgba(245,196,81,.6)}
+.active .card{animation:unroll .8s cubic-bezier(.2,.9,.3,1) both;animation-delay:calc(1s + var(--i)*.18s)}
+@keyframes unroll{from{opacity:0;transform:scaleY(0) translateY(-20px)}to{opacity:1;transform:none}}
+.em{font-size:clamp(38px,5.4vw,70px);display:block;animation:bob 3s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-8px) rotate(4deg)}}
+.card h3{font:900 clamp(15px,1.8vw,23px) var(--hd);color:#8e0a1e;text-transform:uppercase;margin-top:.2em}
+.card .ru{color:#6b5436}
+.card u{display:inline-block;text-decoration:none;background:var(--red);color:#ffe9c0;font:700 clamp(9px,1vw,12px) var(--cn);letter-spacing:.1em;padding:3px 8px;margin:.55em 0;text-transform:uppercase}
+.card p{font-size:clamp(12px,1.3vw,16px);line-height:1.35}
+.nav{position:fixed;bottom:3.4vh;left:0;right:0;display:flex;justify-content:center;align-items:center;gap:16px;z-index:10;padding-bottom:env(safe-area-inset-bottom,0px)}
+.nav button{width:44px;height:44px;border-radius:50%;border:2px solid var(--gold);background:var(--red);color:var(--gold);font-size:22px;cursor:pointer;box-shadow:0 0 16px rgba(200,16,46,.7)}
+.nav button:hover{background:var(--gold);color:var(--red)}
+.dots{display:flex;gap:10px}.dots i{width:12px;height:12px;transform:rotate(45deg);border:2px solid var(--gold);cursor:pointer;transition:.3s}.dots i.on{background:var(--gold);box-shadow:0 0 14px var(--gold);transform:rotate(45deg) scale(1.3)}
+.hint{position:fixed;top:3.4vh;left:50%;transform:translateX(-50%);z-index:10;color:#e9d7b6;font:12px Georgia,serif;letter-spacing:.15em;opacity:.7;padding-top:env(safe-area-inset-top,0px)}
+@media(max-width:700px){.slide{overflow-y:auto;padding:12vh 6vw 16vh}.cn{opacity:.12!important}.lt:nth-of-type(2){display:none}}
+</style>
+</head>
+<body>
+<div class="frame"></div>
+<div class="lt" style="left:7vw"><i></i><b></b></div><div class="lt" style="right:7vw;animation-delay:-2s"><i></i><b></b></div>
+<canvas id="c"></canvas>
+<div class="hint">← → ARROWS · F FULLSCREEN</div>
+<div id="deck"></div>
+<div class="nav"><button id="p" aria-label="Previous">‹</button><div class="dots" id="d"></div><button id="n" aria-label="Next">›</button></div>
+<script>
+const S=[
+{b1:"#4a0710",b2:"#a80f22",cn:"野性俄罗斯",sl:"野",t:"Russia · Nature project",rt:"Россия · Проект о природе",h:"WILD RUSSIA",rh:"ДИКАЯ РОССИЯ",l:"Where animals live. What threatens them.",rl:"Где живут животные. Что им угрожает.",st:[[11,"TIME ZONES","ЧАСОВЫХ ПОЯСОВ"],[17,"MILLION KM²","МЛН КМ²"],[5,"HABITATS","СРЕД ОБИТАНИЯ"]]},
+{b1:"#071a3a",b2:"#1c4a8a",cn:"苔原",sl:"寒",t:"Habitat 01",rt:"Среда обитания 01",h:"TUNDRA",rh:"ТУНДРА",l:"Frozen, treeless and brutal. The ground stays frozen all year.",rl:"Мёрзлая, безлесная, суровая. Почва заморожена круглый год.",c:[["🦊","Arctic fox","Песец","Fur hunting","Охота за мехом","Warming changes where it can live.","Потепление меняет места, где он может жить."],["🦌","Reindeer","Северный олень","Blocked routes","Перекрытые пути","Roads and pipelines cut its migration.","Дороги и трубопроводы режут пути миграции."],["🐻‍❄️","Polar bear","Белый медведь","Melting ice","Таяние льда","Less sea ice means less hunting.","Меньше льда — меньше охоты на тюленей."]]},
+{b1:"#06261c",b2:"#12704f",cn:"针叶林",sl:"林",t:"Habitat 02",rt:"Среда обитания 02",h:"TAIGA",rh:"ТАЙГА",l:"The biggest forest on Earth. Silent, endless, and shrinking.",rl:"Самый большой лес на Земле. Тихий, бесконечный и сокращающийся.",c:[["🐯","Amur tiger","Амурский тигр","Poaching","Браконьерство","Hunting and logging shrink its home.","Охота и вырубка сокращают его дом."],["🐻","Brown bear","Бурый медведь","Wildfires","Лесные пожары","Fires and conflicts with people.","Пожары и конфликты с людьми."],["🐈","Eurasian lynx","Рысь","Logging","Вырубка","Loses shelter when old forests fall.","Теряет укрытие, когда рубят старые леса."]]},
+{b1:"#4a2c04",b2:"#b27410",cn:"草原",sl:"草",t:"Habitat 03",rt:"Среда обитания 03",h:"STEPPE",rh:"СТЕПЬ",l:"Endless grass, hot summers, freezing winters and strong winds.",rl:"Бескрайняя трава, жаркое лето, ледяная зима и сильные ветры.",c:[["🐐","Saiga antelope","Сайгак","Poaching","Браконьерство","Hunted for horns and hit by sudden disease.","Охота ради рогов и внезапные болезни."],["🦅","Steppe eagle","Степной орёл","Power lines","ЛЭП","Wires kill birds, farms take nesting land.","Провода убивают птиц, поля забирают землю для гнёзд."],["🐿️","Bobak marmot","Байбак","Ploughing","Распашка","Farming destroys its burrows.","Распашка уничтожает его норы."]]},
+{b1:"#14161c",b2:"#4a5264",cn:"群山",sl:"山",t:"Habitat 04",rt:"Среда обитания 04",h:"MOUNTAINS",rh:"ГОРЫ",l:"Altai, Caucasus, Sayan. Thin air and steep rock.",rl:"Алтай, Кавказ, Саяны. Разреженный воздух и крутые скалы.",c:[["🐆","Snow leopard","Снежный барс","Very rare","Очень редкий","Poaching and fewer prey animals.","Браконьерство и меньше добычи."],["🐏","Argali","Архар","Hunting","Охота","Hunted and pushed out by livestock.","На него охотятся, а скот вытесняет его."],["🦅","Golden eagle","Беркут","Poison","Яд","Poisoned bait and disturbed nests.","Отравленные приманки и разорённые гнёзда."]]},
+{b1:"#062040",b2:"#1a78a8",cn:"贝加尔湖",sl:"湖",t:"Habitat 05",rt:"Среда обитания 05",h:"LAKE BAIKAL",rh:"ОЗЕРО БАЙКАЛ",l:"The deepest, oldest lake on Earth.",rl:"Самое глубокое и древнее озеро Земли.",st:[[1642,"METERS DEEP","МЕТРОВ ГЛУБИНА"],[20,"% OF WORLD FRESH WATER","% МИРОВОЙ ПРЕСНОЙ ВОДЫ"]],c:[["🦭","Baikal seal","Байкальская нерпа","Freshwater only","Только в пресной воде","The only seal living in fresh water.","Единственный тюлень в пресной воде."],["🐟","Omul","Омуль","Overfishing","Перелов","Too much fishing and warmer water.","Слишком много вылова и тёплая вода."],["💧","The lake","Само озеро","Pollution","Загрязнение","Plastic, waste and algae spoil clear water.","Пластик, отходы и водоросли портят чистую воду."]]},
+{b1:"#1a0508",b2:"#7a0c14",cn:"威胁",sl:"危",t:"Big problems",rt:"Главные проблемы",h:"THE THREATS",rh:"УГРОЗЫ",l:"The same dangers appear everywhere. Most come from people.",rl:"Одни и те же опасности везде. Большинство — от людей.",c:[["🌡️","Climate change","Изменение климата","","","Ice melts, seasons shift, food disappears.","Лёд тает, сезоны сдвигаются, еда исчезает."],["🎯","Poaching","Браконьерство","","","Illegal hunting for fur, horns and meat.","Незаконная охота ради меха, рогов и мяса."],["🪓","Habitat loss","Потеря среды","","","Logging, farming and building cut homes apart.","Вырубка, поля и стройки разрушают дома животных."],["🔥","Fire and pollution","Пожары и загрязнение","","","Burned forests and dirty water.","Сожжённые леса и грязная вода."]]},
+{b1:"#4a0710",b2:"#a80f22",cn:"行动",sl:"行",t:"What can we do?",rt:"Что мы можем сделать?",h:"TAKE ACTION",rh:"ДАВАЙ ДЕЙСТВОВАТЬ",l:"Small actions. Real impact.",rl:"Маленькие шаги. Реальный эффект.",c:[["♻️","Cut waste","Меньше мусора","","","Recycle and never litter in nature.","Сортируй мусор и не сори на природе."],["🌳","Protect forests","Защищай леса","","","Plant trees and save paper.","Сажай деревья и экономь бумагу."],["📢","Spread the word","Расскажи другим","","","Tell friends about rare animals.","Рассказывай друзьям о редких животных."]]},
+{b1:"#4a0710",b2:"#a80f22",cn:"谢谢",sl:"谢",t:"The end",rt:"Конец",h:"THANK YOU",rh:"СПАСИБО",l:"Any questions?",rl:"Есть вопросы?"}
+];
+const MT='<div class="mt"><svg class="m1" viewBox="0 0 1200 300" preserveAspectRatio="none"><path fill="#fff" d="M0 300V180l90-70 70 50 120-110 110 130 90-60 130 90 110-120 140 100 120-80 100 60 120-60v290z"/></svg><svg class="m2" viewBox="0 0 1200 300" preserveAspectRatio="none"><path fill="#000" d="M0 300V230l140-80 110 60 130-100 150 110 110-70 160 90 130-90 120 70 150-40v120z"/></svg></div>';
+const deck=document.getElementById("deck"),dots=document.getElementById("d");
+const ru=t=>t?'<small class="ru">'+t+'</small>':'';let kk=0;
+S.forEach((s,k)=>{const e=document.createElement("section");e.className="slide";e.style.setProperty("--b1",s.b1);e.style.setProperty("--b2",s.b2);
+e.innerHTML=MT+'<div class="cloud" style="top:16vh;animation-delay:-8s"></div><div class="cloud" style="top:34vh;animation-delay:-26s;animation-duration:55s"></div><div class="cn">'+s.cn+'</div><div class="seal">'+s.sl+'</div>'
++'<div class="c tag" style="--k:0">'+s.t+ru(s.rt)+'</div><div class="c" style="--k:1"><h2>'+s.h+'</h2><div class="rh">'+s.rh+'</div></div><p class="c lead" style="--k:2">'+s.l+ru(s.rl)+'</p>'
++(s.st?'<div class="c stats" style="--k:3">'+s.st.map(z=>'<div><b data-n="'+z[0]+'">0</b><small>'+z[1]+'</small>'+ru(z[2])+'</div>').join("")+'</div>':'')
++(s.c?'<div class="cards">'+s.c.map((c,i)=>'<div class="card" style="--i:'+i+'"><span class="em">'+c[0]+'</span><h3>'+c[1]+ru(c[2])+'</h3>'+(c[3]?'<u>'+c[3]+' / '+c[4]+'</u>':'')+'<p>'+c[5]+ru(c[6])+'</p></div>').join("")+'</div>':'');
+deck.appendChild(e);const i=document.createElement("i");i.onclick=()=>go(k);dots.appendChild(i)});
+const sl=[...deck.children],dt=[...dots.children];let cur=-1;
+function go(k){k=Math.max(0,Math.min(S.length-1,k));if(k===cur)return;cur=k;
+sl.forEach((e,i)=>e.classList.toggle("active",i===k));dt.forEach((e,i)=>e.classList.toggle("on",i===k));
+sl[k].querySelectorAll("[data-n]").forEach(b=>{const T=+b.dataset.n,t0=performance.now()+900;(function f(t){const p=Math.max(0,Math.min(1,(t-t0)/1500));b.textContent=Math.round(T*(1-Math.pow(1-p,3))).toLocaleString("en-US");if(p<1)requestAnimationFrame(f)})(t0)})}
+document.getElementById("n").onclick=()=>go(cur+1);document.getElementById("p").onclick=()=>go(cur-1);
+addEventListener("keydown",e=>{if(["ArrowRight"," ","PageDown"].includes(e.key))go(cur+1);if(["ArrowLeft","PageUp"].includes(e.key))go(cur-1);if(e.key==="f"||e.key==="F"){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen()}});
+let tx=0;addEventListener("touchstart",e=>tx=e.touches[0].clientX);addEventListener("touchend",e=>{const d=e.changedTouches[0].clientX-tx;if(Math.abs(d)>60)go(cur+(d<0?1:-1))});
+const cv=document.getElementById("c"),x=cv.getContext("2d");
+function rs(){cv.width=innerWidth;cv.height=innerHeight}rs();addEventListener("resize",rs);
+const P=Array.from({length:60},(_,i)=>({x:Math.random(),y:Math.random(),z:Math.random()*.8+.4,r:Math.random()*6,g:i%4===0}));
+(function f(t){x.clearRect(0,0,cv.width,cv.height);
+P.forEach(p=>{p.y+=p.z*.0016;p.x+=Math.sin(t/1500+p.r)*.0006;if(p.y>1.03){p.y=-.03;p.x=Math.random()}
+x.save();x.translate(p.x*cv.width,p.y*cv.height);x.rotate(t/900*p.z+p.r);x.fillStyle=p.g?"#f5c451":"#ffb7c5";x.globalAlpha=.8;x.beginPath();x.ellipse(0,0,p.z*7,p.z*3.5,0,0,7);x.fill();x.restore()});
+requestAnimationFrame(f)})(0);
+go(0);
+</script>
+</body>
+</html>
